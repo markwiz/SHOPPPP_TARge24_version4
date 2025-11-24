@@ -7,7 +7,7 @@ using ShopTARge24.Core.Dto;
 using ShopTARge24.Data;
 using Xunit;
 
-namespace ShopTARge24.Tests.Kindergarten // <- uus namespace, ilma konfliktita
+namespace ShopTARge24.Tests.Kindergarten 
 {
     public class KindergartenServicesTests
     {
@@ -20,7 +20,7 @@ namespace ShopTARge24.Tests.Kindergarten // <- uus namespace, ilma konfliktita
             return new ShopTARge24Context(options);
         }
 
-        // 1) CREATE - Id tühi -> genereerib uue Guid'i ja trimmib tekstid
+        // 1) CREATE - Id tühi -> genereerib uue Guid'i ja teeb oige teksti
         [Fact]
         public async Task Create_GeneratesNewGuid_WhenIdIsEmpty()
         {
@@ -152,13 +152,13 @@ namespace ShopTARge24.Tests.Kindergarten // <- uus namespace, ilma konfliktita
                 UpdatedAt = DateTime.UtcNow
             });
 
-            // NB! Täidame NÜÜD ka required väljad FileToApi sees
+           
             context.FileToApis.Add(new ShopTARge24.Core.Domain.FileToApi
             {
                 Id = Guid.NewGuid(),
                 KindergartenId = id,
                 ImageTitle = "test image",
-                ImageData = new byte[] { 1, 2, 3 }  // suvaline byte[] ainult selleks, et mitte null olla
+                ImageData = new byte[] { 1, 2, 3 }  
             });
 
             await context.SaveChangesAsync();
