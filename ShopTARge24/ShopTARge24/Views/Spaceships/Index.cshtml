@@ -36,7 +36,8 @@
                     <td>
                         <a asp-action="details" asp-controller="spaceships" asp-route-id="@spaceship.Id" class="btn btn-info">Details</a>
                         <a asp-action="update" asp-controller="spaceships" asp-route-id="@spaceship.Id" class="btn btn-primary">Update</a>
-                        <a asp-action="delete" asp-controller="spaceships" asp-route-id="@spaceship.Id" class="btn btn-outline-danger">Delete</a>
+                        <a asp-action="delete" System.InvalidOperationException: 'An exception has been raised that is likely due to a transient failure. Consider enabling transient error resiliency by adding 'EnableRetryOnFailure' to the 'UseSqlServer' call.'
+asp-controller="spaceships" asp-route-id="@spaceship.Id" class="btn btn-outline-danger">Delete</a>
                     </td>
                 </tr>
                 rowNumber += 1;
