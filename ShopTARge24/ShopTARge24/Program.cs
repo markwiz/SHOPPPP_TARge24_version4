@@ -4,11 +4,10 @@ using ShopTARge24.ApplicationServices.Services;
 using ShopTARge24.Core.Dto.Serviceinterface;
 using ShopTARge24.Core.ServiceInterface;
 using ShopTARge24.Data;
-
+using ShopTARge24.Hubs;  
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<ISpaceshipServices, SpaceshipServices>();
@@ -16,7 +15,6 @@ builder.Services.AddScoped<IFileServices, FileServices>();
 builder.Services.AddScoped<IRealEstateServices, RealEstateServices>();
 builder.Services.AddScoped<IWeatherForecastServices, WeatherForecastServices>();
 builder.Services.AddScoped<IEmailServices, EmailServices>();
-
 
 builder.Services.AddDbContext<KindergartenContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -26,14 +24,13 @@ builder.Services.AddDbContext<ShopTARge24Context>(options =>
 
 builder.Services.AddScoped<IKindergartenServices, KindergartenServices>();
 
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
@@ -43,7 +40,6 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapStaticAssets();
-
 app.UseStaticFiles();
 
 app.MapControllerRoute(
@@ -51,5 +47,6 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
 
+app.MapHub<ChatHub>("/chathub");
 
 app.Run();
