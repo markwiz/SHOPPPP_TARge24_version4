@@ -1,49 +1,57 @@
 ﻿@model ShopTARge24.Models.AccuWeathers.AccuWeatherViewModel
 
-<div class="container">
-    <h2>Foreacast for the selected city</h2>
-    <h2>@Html.DisplayFor(model => model.CityName)</h2>
-    <hr />
-    <dl class="row text-dark">
-        <div>
-            <dt class="col-sm-2">
-                Temperature Min (Celsius):
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.TempMinValue) °C
-            </dd>
+<div class="card page-card shadow-sm">
+    <div class="card-header p-4">
+        <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+            <div>
+                <h1 class="page-title h3 m-0">Forecast</h1>
+                <div class="page-subtitle small mt-1">
+                    Selected city: <span class="fw-semibold">@Model.CityName</span>
+                </div>
+            </div>
+
+            <a asp-controller="AccuWeathers" asp-action="Index" class="btn btn-outline-secondary btn-sm">
+                New search
+            </a>
         </div>
-        <div>
-            <dt class="col-sm-2">
-                Temperature Max (Celsius):
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.TempMaxValue) °C
-            </dd>
+    </div>
+
+    <div class="card-body p-4">
+        <div class="row g-3 mb-3">
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="kpi">
+                    <div class="small text-muted">Min temp (°C)</div>
+                    <div class="h4 m-0">@Model.TempMinValue</div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="kpi">
+                    <div class="small text-muted">Max temp (°C)</div>
+                    <div class="h4 m-0">@Model.TempMaxValue</div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="kpi">
+                    <div class="small text-muted">Severity</div>
+                    <div class="h4 m-0">@Model.Severity</div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="kpi">
+                    <div class="small text-muted">Category</div>
+                    <div class="h4 m-0">@Model.Category</div>
+                </div>
+            </div>
         </div>
-        <div>
-            <dt class="col-sm-2">
-                Severity:
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Severity)
-            </dd>
+
+        <div class="card form-card">
+            <div class="card-body">
+                <div class="small text-muted mb-1">Weather text</div>
+                <div class="fs-5 fw-semibold">@Model.Text</div>
+            </div>
         </div>
-        <div>
-            <dt class="col-sm-2">
-                Category:
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Category)
-            </dd>
-        </div>
-        <div>
-            <dt class="col-sm-2">
-                Weather Text:
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Text)
-            </dd>
-        </div>
-    </dl>
+    </div>
 </div>
