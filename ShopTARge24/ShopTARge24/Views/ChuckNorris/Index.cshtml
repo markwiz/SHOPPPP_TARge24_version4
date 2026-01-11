@@ -1,11 +1,32 @@
 ﻿@model ShopTARge24.Models.ChuckNorris.ChuckNorrisModel
 
-<h1>Joke</h1>
+<div class="card page-card shadow-sm">
+    <div class="card-header p-4">
+        <h1 class="page-title h3 m-0">Chuck Norris</h1>
+        <div class="page-subtitle small mt-1">Random joke generator. Brace yourself.</div>
+    </div>
 
-<div class="container mt-4">
-    <h2>Random Joke from Chuck</h2>
-    <img src="https://i.gifer.com/2Xx.gif" alt="Chuck Norris" style="width:50%; height:auto;" />
-    <p class="lead">@Model.Value</p>
+    <div class="card-body p-4">
+        <div class="row g-3 align-items-center">
+            <div class="col-12 col-lg-4">
+                <div class="card border-0 overflow-hidden" style="border-radius: 16px;">
+                    <img src="https://i.gifer.com/2Xx.gif" alt="Chuck Norris" class="img-fluid" />
+                </div>
+            </div>
 
-    <a class="bt btn-primary" asp-controller="ChuckNorris" asp-action="Index">Another?</a>
+            <div class="col-12 col-lg-8">
+                <div class="card border-0" style="background: rgba(255,255,255,.7); border-radius: 16px;">
+                    <div class="card-body">
+                        <div class="small text-muted mb-2">Joke</div>
+                        <p class="fs-5 m-0">@Model.Value</p>
+
+                        <div class="mt-3 d-flex gap-2">
+                            <a class="btn btn-primary" asp-controller="ChuckNorris" asp-action="Index">Another</a>
+                            <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="Index">Back</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
