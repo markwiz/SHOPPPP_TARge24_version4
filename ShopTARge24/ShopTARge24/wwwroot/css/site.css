@@ -126,3 +126,44 @@ main {
     background: rgba(255,255,255,.75);
     padding: .85rem 1rem;
 }
+
+.form-card {
+    background: rgba(255,255,255,.75);
+    border: 1px solid rgba(15,23,42,.08);
+    border-radius: 16px;
+}
+
+    .form-card .card-body {
+        padding: 1.25rem;
+    }
+
+.form-label {
+    font-weight: 600;
+}
+
+.image-grid .thumb {
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid rgba(15,23,42,.10);
+    background: #fff;
+}
+
+.image-grid img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    display: block;
+}
+
+.image-grid .caption {
+    padding: .6rem .75rem;
+    border-top: 1px solid rgba(15,23,42,.08);
+}
+
+.actions {
+    display: flex;
+    gap: .5rem;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}
+
