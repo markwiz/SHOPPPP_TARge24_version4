@@ -36,13 +36,13 @@ namespace ShopTARge24.Controllers
         }
 
         [HttpGet]
-        public IActionResult City(string city)
+        public async Task<IActionResult> City(string city)
         {
             AccuLocationWeatherResultDto dto = new();
             dto.CityName = city;
 
-            //_weatherForecastServices.AccuWeatherResult(dto);
-            _weatherForecastServices.AccuWeatherResultWebClient(dto);
+            dto = await _weatherForecastServices.AccuWeatherResultWebClient(dto);
+
             AccuWeatherViewModel vm = new();
             vm.CityName = dto.CityName;
             vm.EffectiveDate = dto.EffectiveDate;
@@ -80,5 +80,6 @@ namespace ShopTARge24.Controllers
 
             return View(vm);
         }
+
     }
 }

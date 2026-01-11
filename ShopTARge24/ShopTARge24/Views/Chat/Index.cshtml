@@ -58,8 +58,35 @@
             const mainRow = document.createElement("div");
             mainRow.className = "d-flex justify-content-between align-items-center";
 
-            const textSpan = document.createElement("span");
-            textSpan.textContent = `${user}: ${message}`;
+                   const left = document.createElement("div");
+        left.className = "d-flex flex-column";
+
+        const topLine = document.createElement("div");
+        topLine.className = "d-flex align-items-center gap-2";
+
+        const nameBadge = document.createElement("span");
+        const isAdmin = (user || "").trim().toLowerCase() === "admin";
+        nameBadge.className = "badge " + (isAdmin ? "text-bg-danger" : "text-bg-secondary");
+        nameBadge.textContent = isAdmin ? "Admin" : "User";
+
+        const nameText = document.createElement("span");
+        nameText.className = "fw-semibold";
+        nameText.textContent = user;
+
+        const msgText = document.createElement("span");
+        msgText.textContent = message;
+
+        topLine.appendChild(nameBadge);
+        topLine.appendChild(nameText);
+
+        const bottomLine = document.createElement("div");
+        bottomLine.className = "small text-muted mt-1";
+        bottomLine.textContent = time; // kellaeg kohe nähtav
+
+        left.appendChild(topLine);
+        left.appendChild(msgText);
+        left.appendChild(bottomLine);
+
 
             const detailsButton = document.createElement("button");
             detailsButton.className = "btn btn-sm btn-outline-secondary";
@@ -74,7 +101,8 @@
                 metaDiv.style.display = metaDiv.style.display === "none" ? "block" : "none";
             });
 
-            mainRow.appendChild(textSpan);
+            mainRow.appendChild(left);
+
             mainRow.appendChild(detailsButton);
 
             li.appendChild(mainRow);
