@@ -4,40 +4,71 @@
     int rowNumber = 1;
 }
 
-<div class="mb-3">
-    <a asp-action="Create" asp-controller="Spaceships" class="btn btn-primary">Create</a>
-</div>
+<div class="card page-card shadow-sm">
+    <div class="card-header p-4">
+        <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+            <div>
+                <h1 class="page-title h3 m-0">Spaceships</h1>
+                <div class="page-subtitle small mt-1">Manage ships, crew and attachments.</div>
+            </div>
 
-<h1>Spaceships</h1>
+            @* NB! Create nupp ainult siis, kui on andmeid.
+               Kui andmeid pole, näitame Empty-state Create nupu. *@
+            @if (Model != null && Model.Any())
+            {
+                <a asp-action="Create" asp-controller="Spaceships" class="btn btn-primary">Create</a>
+            }
+        </div>
+    </div>
 
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th scope="col">Nr</th>
-            <th scope="col">Name</th>
-            <th scope="col">Type</th>
-            <th scope="col">Built Date</th>
-            <th scope="col">Crew</th>
-            <th scope="col"></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var spaceship in Model)
+    <div class="card-body p-4">
+        @if (Model != null && Model.Any())
         {
-            <tr>
-                <td>@rowNumber</td>
-                <td>@spaceship.Name</td>
-                <td>@spaceship.Classification</td>
-                <td>@spaceship.BuiltDate</td>
-                <td>@spaceship.Crew</td>
-                <td>
-                    <a asp-action="Details" asp-controller="Spaceships" asp-route-id="@spaceship.Id" class="btn btn-info">Details</a>
-                    <a asp-action="Update" asp-controller="Spaceships" asp-route-id="@spaceship.Id" class="btn btn-primary">Update</a>
-                    <a asp-action="Delete" asp-controller="Spaceships" asp-route-id="@spaceship.Id" class="btn btn-outline-danger">Delete</a>
-                </td>
-            </tr>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col">Nr</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Built Date</th>
+                            <th scope="col">Crew</th>
+                            <th class="text-end" scope="col">Actions</th>
+                        </tr>
+                    </thead>
 
-            rowNumber++;
+                    <tbody>
+                        @foreach (var spaceship in Model)
+                        {
+                            <tr>
+                                <td>@rowNumber</td>
+                                <td>@spaceship.Name</td>
+                                <td>@spaceship.Classification</td>
+                                <td>@spaceship.BuiltDate</td>
+                                <td>@spaceship.Crew</td>
+                                <td class="text-end">
+                                    <div class="actions">
+                                        <a asp-action="Details" asp-controller="Spaceships" asp-route-id="@spaceship.Id" class="btn btn-outline-secondary btn-sm">Details</a>
+                                        <a asp-action="Update" asp-controller="Spaceships" asp-route-id="@spaceship.Id" class="btn btn-primary btn-sm">Update</a>
+                                        <a asp-action="Delete" asp-controller="Spaceships" asp-route-id="@spaceship.Id" class="btn btn-outline-danger btn-sm">Delete</a>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            rowNumber++;
+                        }
+                    </tbody>
+                </table>
+            </div>
         }
-    </tbody>
-</table>
+        else
+        {
+            <div class="text-center py-5 text-muted">
+                <div class="mb-2" style="font-size: 2rem;">🚀</div>
+                <div class="fw-semibold">No spaceships yet</div>
+                <div class="small mb-3">Create the first ship to get started.</div>
+                <a asp-action="Create" asp-controller="Spaceships" class="btn btn-primary">Create</a>
+            </div>
+        }
+    </div>
+</div>

@@ -11,7 +11,11 @@
                 <h1 class="page-title h3 m-0">Real Estates</h1>
                 <div class="page-subtitle small mt-1">Manage properties and attachments.</div>
             </div>
-            <a asp-action="Create" asp-controller="RealEstates" class="btn btn-primary">Create</a>
+            @if (Model != null && Model.Any())
+            {
+                <a asp-action="Create" asp-controller="RealEstates" class="btn btn-primary">Create</a>
+            }
+
         </div>
     </div>
 

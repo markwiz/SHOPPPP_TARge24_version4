@@ -11,9 +11,11 @@
                 <h1 class="page-title h3 m-0">Kindergarten</h1>
                 <div class="page-subtitle small mt-1">Manage groups, teachers and attachments.</div>
             </div>
-            <a asp-action="Create" asp-controller="Kindergarten" class="btn btn-primary" id="testIdAdd">
-                Create
-            </a>
+            @if (Model != null && Model.Any())
+            {
+                <a asp-action="Create" asp-controller="Kindergarten" class="btn btn-primary" id="testIdAdd">Create</a>
+            }
+
         </div>
     </div>
 
