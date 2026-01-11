@@ -1,37 +1,57 @@
 ﻿@model ShopTARge24.Models.CockTails.CockTailsViewModel
 
-<!--Search-->
-<form method="get" asp-controller="CockTails" asp-action="Index" class="mb-4">
-    <div class="input-group">
-        <input type="text"
-               name="searchTerm"
-               class="form-control"
-               placeholder="Search cocktails..."
-               value="@ViewBag.SearchTerm" />
-        <button class="btn btn-primary" type="submit">Search</button>
-    </div>
-</form>
-
-<div class="row">
-    @if (Model?.drinks != null && Model.drinks.Any())
-    {
-        foreach (var drink in Model.drinks)
-        {
-            <div class="col-md-4 mb-3">
-                <div class="card h-100 shadow-sm">
-                    <img src="@drink.strDrinkThumb" class="card-img-top" alt="@drink.strDrink" />
-                    <div class="card-body">
-                        <h5 class="card-title">@drink.strDrink</h5>
-                        <p><strong>Category:</strong> @drink.strCategory</p>
-                        <p><strong>Glass:</strong> @drink.strGlass</p>
-                        <p>@drink.strInstructions</p>
-                    </div>
-                </div>
+<div class="card page-card shadow-sm">
+    <div class="card-header p-4">
+        <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+            <div>
+                <h1 class="page-title h3 m-0">CockTails</h1>
+                <div class="page-subtitle small mt-1">Search and browse drinks.</div>
             </div>
-        }
-    }
-    else
-    {
-        <p>No cocktails found for "@ViewBag.SearchTerm".</p>
-    }
+        </div>
+    </div>
+
+    <div class="card-body p-4">
+        <form method="get" asp-controller="CockTails" asp-action="Index" class="mb-4">
+            <div class="input-group">
+                <input type="text"
+                       name="searchTerm"
+                       class="form-control"
+                       placeholder="Search cocktails..."
+                       value="@ViewBag.SearchTerm" />
+                <button class="btn btn-primary" type="submit">Search</button>
+            </div>
+        </form>
+
+        <div class="row g-3">
+            @if (Model?.drinks != null && Model.drinks.Any())
+            {
+                foreach (var drink in Model.drinks)
+                {
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="card h-100 border-0 shadow-sm overflow-hidden" style="border-radius: 16px;">
+                            <img src="@drink.strDrinkThumb" class="card-img-top" alt="@drink.strDrink" />
+                            <div class="card-body">
+                                <h5 class="card-title">@drink.strDrink</h5>
+
+                                <div class="small text-muted mb-2">
+                                    <span class="me-2"><strong>Category:</strong> @drink.strCategory</span>
+                                    <span><strong>Glass:</strong> @drink.strGlass</span>
+                                </div>
+
+                                <p class="mb-0">@drink.strInstructions</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="text-center py-5 text-muted">
+                    <div class="mb-2" style="font-size: 2rem;">🍸</div>
+                    <div class="fw-semibold">No cocktails found</div>
+                    <div class="small">Try another search term.</div>
+                </div>
+            }
+        </div>
+    </div>
 </div>
