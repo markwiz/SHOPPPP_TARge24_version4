@@ -4,47 +4,69 @@
     int rowNumber = 1;
 }
 
-<div>
-    <a asp-action="create" asp-controller="RealEstates" type="submit" class="btn btn-primary">Create</a>
-</div>
+<div class="card page-card shadow-sm">
+    <div class="card-header p-4">
+        <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+            <div>
+                <h1 class="page-title h3 m-0">Real Estates</h1>
+                <div class="page-subtitle small mt-1">Manage properties and attachments.</div>
+            </div>
+            <a asp-action="Create" asp-controller="RealEstates" class="btn btn-primary">Create</a>
+        </div>
+    </div>
 
-<div class="h1">
-    RealEstates
+    <div class="card-body p-4">
+        @if (Model != null && Model.Any())
+        {
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>#</th>
+                            <th>Id</th>
+                            <th>Area</th>
+                            <th>Location</th>
+                            <th>RoomNumber</th>
+                            <th>BuildingType</th>
+                            <th>CreatedAt</th>
+                            <th>ModifiedAt</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var realestate in Model)
+                        {
+                            <tr>
+                                <td>@rowNumber</td>
+                                <td>@realestate.Id</td>
+                                <td>@realestate.Area</td>
+                                <td>@realestate.Location</td>
+                                <td>@realestate.RoomNumber</td>
+                                <td>@realestate.BuildingType</td>
+                                <td>@realestate.CreatedAt</td>
+                                <td>@realestate.ModifiedAt</td>
+                                <td class="text-end">
+                                    <div class="actions">
+                                        <a asp-action="Details" asp-controller="RealEstates" asp-route-id="@realestate.Id" class="btn btn-outline-secondary btn-sm">Details</a>
+                                        <a asp-action="Update" asp-controller="RealEstates" asp-route-id="@realestate.Id" class="btn btn-primary btn-sm">Update</a>
+                                        <a asp-action="Delete" asp-controller="RealEstates" asp-route-id="@realestate.Id" class="btn btn-outline-danger btn-sm">Delete</a>
+                                    </div>
+                                </td>
+                            </tr>
+                            rowNumber += 1;
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <div class="text-center py-5 text-muted">
+                <div class="mb-2" style="font-size: 2rem;">🏠</div>
+                <div class="fw-semibold">No real estates yet</div>
+                <div class="small mb-3">Create the first property entry.</div>
+                <a asp-action="Create" asp-controller="RealEstates" class="btn btn-primary">Create</a>
+            </div>
+        }
+    </div>
 </div>
-<form method="get">
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th scope="col">Id</th>
-                <th scope="col">Area</th>
-                <th scope="col">Location</th>
-                <th scope="col">RoomNumber</th>
-                <th scope="col">BuildingType</th>
-                <th scope="col">CreatedAt</th>
-                <th scope="col">ModifiedAt</th>
-                <th scope="col"></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var realestate in Model)
-            {
-                <tr>
-                    <td>@rowNumber</td>
-                    <td>@realestate.Id</td>
-                    <td>@realestate.Area</td>
-                    <td>@realestate.Location</td>
-                    <td>@realestate.RoomNumber</td>
-                    <td>@realestate.BuildingType</td>
-                    <td>@realestate.CreatedAt</td>
-                    <td>@realestate.ModifiedAt</td>
-                    <td class="d-flex gap-2">
-                        <a asp-action="details" asp-controller="RealEstates" asp-route-id="@realestate.Id" class="btn btn-info">Details</a>
-                        <a asp-action="update" asp-controller="RealEstates" asp-route-id="@realestate.Id" class="btn btn-primary">Update</a>
-                        <a asp-action="delete" asp-controller="RealEstates" asp-route-id="@realestate.Id" class="btn btn-outline-danger">Delete</a>
-                    </td>
-                </tr>
-                rowNumber += 1;
-            }
-        </tbody>
-    </table>
-</form>

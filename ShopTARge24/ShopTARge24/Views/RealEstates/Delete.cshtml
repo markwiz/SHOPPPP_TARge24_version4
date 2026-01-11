@@ -1,69 +1,74 @@
 ﻿@model ShopTARge24.Models.RealEstates.RealEstateDeleteViewModel
 
-<h1>Delete</h1>
+<div class="card page-card shadow-sm">
+    <div class="card-header p-4">
+        <h1 class="page-title h3 m-0">Delete Real Estate</h1>
+        <div class="page-subtitle small mt-1">This action cannot be undone.</div>
+    </div>
 
-<div>
-    <h4>RealEstates</h4>
-    <hr />
-    <dl class="row">
-        <div class="form-group row">
-            <label asp-for="Id" class="col-sm-2 col-form-label"></label>
-            @Html.DisplayFor(model => model.Id)
+    <div class="card-body p-4">
+        <div class="alert alert-danger">
+            <div class="fw-semibold">Are you sure?</div>
+            <div class="small">Deleting will remove this property record.</div>
         </div>
-    </dl>
 
-    <dl class="row">
-        <div class="form-group row">
-            <label asp-for="Area" class="col-sm-2 col-form-label"></label>
-            @Html.DisplayFor(model => model.Area)
+        <div class="card form-card">
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-12 col-md-4">
+                        <div class="small text-muted">Id</div>
+                        <div class="fw-semibold">@Model.Id</div>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <div class="small text-muted">Area</div>
+                        <div class="fw-semibold">@Model.Area</div>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <div class="small text-muted">RoomNumber</div>
+                        <div class="fw-semibold">@Model.RoomNumber</div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="small text-muted">Location</div>
+                        <div class="fw-semibold">@Model.Location</div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="small text-muted">BuildingType</div>
+                        <div class="fw-semibold">@Model.BuildingType</div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="small text-muted">CreatedAt</div>
+                        <div class="fw-semibold">@Model.CreatedAt</div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="small text-muted">ModifiedAt</div>
+                        <div class="fw-semibold">@Model.ModifiedAt</div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </dl>
 
-    <dl class="row">
-        <div class="form-group row">
-            <label asp-for="Location" class="col-sm-2 col-form-label"></label>
-            @Html.DisplayFor(model => model.Location)
-        </div>
-    </dl>
+        @if (Model.ImageViewModels != null && Model.ImageViewModels.Any())
+        {
+            <hr class="my-4" />
+            <div class="fw-semibold mb-2">Images</div>
+            <div class="row g-3 image-grid">
+                @foreach (var images in Model.ImageViewModels)
+                {
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="thumb">
+                            <partial name="_Images" model="images" />
+                        </div>
+                    </div>
+                }
+            </div>
+        }
 
-    <dl class="row">
-        <div class="form-group row">
-            <label asp-for="RoomNumber" class="col-sm-2 col-form-label"></label>
-            @Html.DisplayFor(model => model.RoomNumber)
-        </div>
-    </dl>
+        <hr class="my-4" />
 
-    <dl class="row">
-        <div class="form-group row">
-            <label asp-for="BuildingType" class="col-sm-2 col-form-label"></label>
-            @Html.DisplayFor(model => model.BuildingType)
-        </div>
-    </dl>
-
-    <dl class="row">
-        <div class="form-group row">
-            <label asp-for="CreatedAt" class="col-sm-2 col-form-label"></label>
-            @Html.DisplayFor(model => model.CreatedAt)
-        </div>
-    </dl>
-
-    <dl class="row">
-        <div class="form-group row">
-            <label asp-for="ModifiedAt" class="col-sm-2 col-form-label"></label>
-            @Html.DisplayFor(model => model.ModifiedAt)
-        </div>
-    </dl>
-
-    @foreach (var images in Model.ImageViewModels)
-    {
-        <partial name="_Images" model="images" />
-    }
-
-    <hr />
-    <form asp-action="DeleteConfirmation">
-        <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Delete" class="btn btn-danger" />
-        <a asp-action="Index" asp-controller="RealEstates" class="btn btn-success">Back</a>
-    </form>
-
+        <form asp-action="DeleteConfirmation" class="d-flex gap-2">
+            <input type="hidden" asp-for="Id" />
+            <input type="submit" value="Delete" class="btn btn-danger" />
+            <a asp-action="Index" asp-controller="RealEstates" class="btn btn-outline-secondary">Cancel</a>
+        </form>
+    </div>
 </div>
