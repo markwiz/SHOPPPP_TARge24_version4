@@ -1,36 +1,38 @@
 ﻿@model ShopTARge24.Models.Email.EmailViewModel
 
-<div>
-    <form method="post" enctype="multipart/form-data">
+<div class="card page-card shadow-sm">
+    <div class="card-header p-4">
+        <h1 class="page-title h3 m-0">Email</h1>
+        <div class="page-subtitle small mt-1">Send an email with optional attachments.</div>
+    </div>
 
-        <div class="form-group row">
-            <label asp-for="To" class="col-sm-2 col-form-label"></label>
-            <div class="col-sm-5">
-                <input asp-for="To" class="form-control" />
+    <div class="card-body p-4">
+        <form method="post" enctype="multipart/form-data" class="row g-3">
+            <div class="col-12 col-lg-7">
+                <label asp-for="To" class="form-label fw-semibold"></label>
+                <input asp-for="To" class="form-control" placeholder="recipient@example.com" />
             </div>
-        </div>
 
-        <div class="form-group row">
-            <label asp-for="Subject" class="col-sm-2 col-form-label"></label>
-            <div class="col-sm-5">
-                <input asp-for="Subject" class="form-control" />
+            <div class="col-12 col-lg-7">
+                <label asp-for="Subject" class="form-label fw-semibold"></label>
+                <input asp-for="Subject" class="form-control" placeholder="Subject…" />
             </div>
-        </div>
 
-        <div class="form-group row">
-            <label asp-for="Body" class="col-sm-2 col-form-label"></label>
-            <div class="col-sm-5">
-                <textarea asp-for="Body" class="form-control"></textarea>
+            <div class="col-12 col-lg-9">
+                <label asp-for="Body" class="form-label fw-semibold"></label>
+                <textarea asp-for="Body" class="form-control" rows="6" placeholder="Write your message…"></textarea>
             </div>
-        </div>
 
-        <div class="form-group row">
-            <label asp-for="Attachment" class="col-sm-2 col-form-label"></label>
-            <div class="col-sm-5">
-                <input asp-for="Attachment" class="form-control" multiple="multiple" type="file"/>
+            <div class="col-12 col-lg-7">
+                <label asp-for="Attachment" class="form-label fw-semibold"></label>
+                <input asp-for="Attachment" class="form-control" multiple="multiple" type="file" />
+                <div class="form-text">You can attach multiple files.</div>
             </div>
-        </div>
 
-        <input asp-action="sendEmail" asp-controller="email" type="submit" class="btn btn-primary" value="Send Email" />
-    </form>
+            <div class="col-12 d-flex gap-2">
+                <input asp-action="SendEmail" asp-controller="Email" type="submit" class="btn btn-primary" value="Send Email" />
+                <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary">Back</a>
+            </div>
+        </form>
+    </div>
 </div>
