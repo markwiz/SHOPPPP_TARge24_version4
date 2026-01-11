@@ -4,44 +4,67 @@
     int rowNumber = 1;
 }
 
-<div>
-    <a asp-action="create" asp-controller="kindergarten" type="submit" class="btn btn-primary" id="testIdAdd">Create</a>
-</div>
+<div class="card page-card shadow-sm">
+    <div class="card-header p-4">
+        <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+            <div>
+                <h1 class="page-title h3 m-0">Kindergarten</h1>
+                <div class="page-subtitle small mt-1">Manage groups, teachers and attachments.</div>
+            </div>
+            <a asp-action="Create" asp-controller="Kindergarten" class="btn btn-primary" id="testIdAdd">
+                Create
+            </a>
+        </div>
+    </div>
 
-<div class="h1">
-    Kindergarten
+    <div class="card-body p-4">
+        @if (Model != null && Model.Any())
+        {
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col">Nr</th>
+                            <th scope="col">Id</th>
+                            <th scope="col">GroupName</th>
+                            <th scope="col">ChildrenCount</th>
+                            <th scope="col">KindergartenName</th>
+                            <th scope="col">TeacherName</th>
+                            <th class="text-end" scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var kindergarten in Model)
+                        {
+                            <tr>
+                                <td>@rowNumber</td>
+                                <td>@kindergarten.Id</td>
+                                <td>@kindergarten.GroupName</td>
+                                <td>@kindergarten.ChildrenCount</td>
+                                <td>@kindergarten.KindergartenName</td>
+                                <td>@kindergarten.TeacherName</td>
+                                <td class="text-end">
+                                    <div class="actions">
+                                        <a asp-action="Details" asp-route-id="@kindergarten.Id" class="btn btn-outline-secondary btn-sm" id="kinder-details-@kindergarten.Id">Details</a>
+                                        <a asp-action="Update" asp-route-id="@kindergarten.Id" class="btn btn-primary btn-sm" id="kinder-update-@kindergarten.Id">Update</a>
+                                        <a asp-action="Delete" asp-route-id="@kindergarten.Id" class="btn btn-outline-danger btn-sm" id="kinder-delete-@kindergarten.Id">Delete</a>
+                                    </div>
+                                </td>
+                            </tr>
+                            rowNumber += 1;
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <div class="text-center py-5 text-muted">
+                <div class="mb-2" style="font-size: 2rem;">🧸</div>
+                <div class="fw-semibold">No kindergartens yet</div>
+                <div class="small mb-3">Create the first record to get started.</div>
+                <a asp-action="Create" asp-controller="Kindergarten" class="btn btn-primary">Create</a>
+            </div>
+        }
+    </div>
 </div>
-<form method="post">
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th scope="col">Nr</th>
-                <th scope="col">Id</th>
-                <th scope="col">GroupName</th>
-                <th scope="col">ChildrenCount</th>
-                <th scope="col">KindergartenName</th>
-                <th scope="col">TeacherName</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var kindergarten in Model)
-            {
-                <tr>
-                    <td>@rowNumber</td>
-                    <td>@kindergarten.Id</td>
-                    <td>@kindergarten.GroupName</td>
-                    <td>@kindergarten.ChildrenCount</td>
-                    <td>@kindergarten.KindergartenName</td>
-                    <td>@kindergarten.TeacherName</td>
-                    <td>
-                        <a asp-action="Details" asp-route-id="@kindergarten.Id" class="btn btn-primary" id="kinder-details-@kindergarten.Id">Details</a>
-                        <a asp-action="Update" asp-route-id="@kindergarten.Id" class="btn btn-info" id="kinder-update-@kindergarten.Id">Update</a>
-                        <a asp-action="Delete" asp-route-id="@kindergarten.Id" class="btn btn-outline-danger" id="kinder-delete-@kindergarten.Id">Delete</a>
-                    </td>
-                </tr>
-                rowNumber += 1; 
-            }
-        </tbody>
-    </table>
-</form>

@@ -1,72 +1,75 @@
 ﻿@model ShopTARge24.Models.Kindergarten.KindergartenDetailsViewModel
 
-<h1>Details</h1>
+<div class="card page-card shadow-sm">
+    <div class="card-header p-4">
+        <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+            <div>
+                <h1 class="page-title h3 m-0">Kindergarten Details</h1>
+                <div class="page-subtitle small mt-1">Read-only view of the record.</div>
+            </div>
+            <a asp-action="Index" asp-controller="Kindergarten" class="btn btn-outline-secondary btn-sm">Back</a>
+        </div>
+    </div>
 
-<div>
-	<h4>Kindergarten</h4>
-	<hr />
-	<dl class="row">
-		<div class="form-group row">
-			<label asp-for="Nr" class="col-sm-2 col-form-label"></label>
-			@Html.DisplayFor(model => model.Nr)
-		</div>
-	</dl>
+    <div class="card-body p-4">
+        <div class="card form-card">
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-12 col-md-3">
+                        <div class="small text-muted">Nr</div>
+                        <div class="fw-semibold">@Model.Nr</div>
+                    </div>
 
-	<dl class="row">
-		<div class="form-group row">
-			<label asp-for="Id" class="col-sm-2 col-form-label"></label>
-			@Html.DisplayFor(model => model.Id)
-		</div>
+                    <div class="col-12 col-md-5">
+                        <div class="small text-muted">Id</div>
+                        <div class="fw-semibold">@Model.Id</div>
+                    </div>
 
-		<dl class="row">
-			<div class="form-group row">
-				<label asp-for="GroupName" class="col-sm-2 col-form-label"></label>
-				@Html.DisplayFor(model => model.GroupName)
-			</div>
-		</dl>
-		<dl class="row">
-			<div class="form-group row">
-				<label asp-for="ChildrenCount" class="col-sm-2 col-form-label"></label>
-				@Html.DisplayFor(model => model.ChildrenCount)
-			</div>
-		</dl>
+                    <div class="col-12 col-md-6">
+                        <div class="small text-muted">GroupName</div>
+                        <div class="fw-semibold">@Model.GroupName</div>
+                    </div>
 
-		<dl class="row">
-			<div class="form-group row">
-				<label asp-for="KindergartenName" class="col-sm-2 col-form-label"></label>
-				@Html.DisplayFor(model => model.KindergartenName)
-			</div>
-		</dl>
+                    <div class="col-12 col-md-6">
+                        <div class="small text-muted">ChildrenCount</div>
+                        <div class="fw-semibold">@Model.ChildrenCount</div>
+                    </div>
 
-		<dl class="row">
-			<div class="form-group row">
-				<label asp-for="TeacherName" class="col-sm-2 col-form-label"></label>
-				@Html.DisplayFor(model => model.TeacherName)
-			</div>
-		</dl>
+                    <div class="col-12 col-md-6">
+                        <div class="small text-muted">KindergartenName</div>
+                        <div class="fw-semibold">@Model.KindergartenName</div>
+                    </div>
 
-	</dl>
+                    <div class="col-12 col-md-6">
+                        <div class="small text-muted">TeacherName</div>
+                        <div class="fw-semibold">@Model.TeacherName</div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-	<hr />
+        <hr class="my-4" />
 
-	<hr />
-
-	@if (Model.Images != null && Model.Images.Any())
-	{
-		<div class="row mt-3">
-			@foreach (var image in Model.Images)
-			{
-				<div class="col-md-3 mb-3">
-					<img src="@image.Image" alt="@image.ImageTitle" class="img-thumbnail" />
-					<p class="text-center">@image.ImageTitle</p>
-				</div>
-			}
-		</div>
-	}
-	else
-	{
-		<p>No images available.</p>
-	}
-	<a asp-action="Index" asp-controller="kindergarten" class="btn btn-danger">Back</a>
-
+        @if (Model.Images != null && Model.Images.Any())
+        {
+            <div class="fw-semibold mb-2">Images</div>
+            <div class="row g-3 image-grid">
+                @foreach (var image in Model.Images)
+                {
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <div class="thumb">
+                            <img src="@image.Image" alt="@image.ImageTitle" />
+                            <div class="caption">
+                                <div class="small text-truncate">@image.ImageTitle</div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="text-muted small">No images available.</div>
+        }
+    </div>
 </div>

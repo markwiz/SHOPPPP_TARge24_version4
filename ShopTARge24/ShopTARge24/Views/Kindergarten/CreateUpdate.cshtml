@@ -1,106 +1,122 @@
 ﻿@model ShopTARge24.Models.Kindergarten.KindergartenCreateUpdateViewModel
 
-@if (Model.Id.HasValue)
-{
-    <h1>Update</h1>
-}
-else
-{
-    <h1>Create</h1>
+@{
+    bool isEdit = Model.Id.HasValue;
+    string title = isEdit ? "Update Kindergarten" : "Create Kindergarten";
+    string subtitle = isEdit ? "Edit details and manage images." : "Add a new record and upload images.";
 }
 
-<div>
-    <form asp-action="@(Model.Id.HasValue ? "Update" : "Create")"
-          asp-controller="Kindergarten"
-          method="post"
-          enctype="multipart/form-data">
-        @Html.AntiForgeryToken()
-
-        <input asp-for="Id" type="hidden" id="kinder-id"/>
-        <input asp-for="CreatedAt" type="hidden" id="kinder-created"/>
-        <input asp-for="ModifiedAt" type="hidden" id="kinder-modified"/>
-
-        <div class="form-group row">
-            <label asp-for="Nr" class="col-sm-2 col-form-label"></label>
-            <div class="col-sm-10">
-                <input asp-for="Nr" class="form-control" id="kinder-nr"/>
+<div class="card page-card shadow-sm">
+    <div class="card-header p-4">
+        <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+            <div>
+                <h1 class="page-title h3 m-0">@title</h1>
+                <div class="page-subtitle small mt-1">@subtitle</div>
             </div>
+            <a asp-action="Index" asp-controller="Kindergarten" class="btn btn-outline-secondary btn-sm" id="kinder-back-top">
+                Back
+            </a>
         </div>
+    </div>
 
-        <div class="form-group row">
-            <label asp-for="GroupName" class="col-sm-2 col-form-label"></label>
-            <div class="col-sm-10">
-                <input asp-for="GroupName" class="form-control" id="kinder-groupname"/>
-            </div>
-        </div>
+    <div class="card-body p-4">
+        <div class="card form-card">
+            <div class="card-body">
+                <form asp-action="@(isEdit ? "Update" : "Create")"
+                      asp-controller="Kindergarten"
+                      method="post"
+                      enctype="multipart/form-data"
+                      class="row g-3">
+                    @Html.AntiForgeryToken()
 
-        <div class="form-group row">
-            <label asp-for="ChildrenCount" class="col-sm-2 col-form-label"></label>
-            <div class="col-sm-10">
-                <input asp-for="ChildrenCount" class="form-control" id="kinder-childcount"/>
-                @*CRUD TESTI JAOKS*@
-                <span asp-validation-for="ChildrenCount" class="text-danger"></span>
-            </div>
-        </div>
+                    <input asp-for="Id" type="hidden" id="kinder-id" />
+                    <input asp-for="CreatedAt" type="hidden" id="kinder-created" />
+                    <input asp-for="ModifiedAt" type="hidden" id="kinder-modified" />
 
-        <div class="form-group row">
-            <label asp-for="KindergartenName" class="col-sm-2 col-form-label"></label>
-            <div class="col-sm-10">
-                <input asp-for="KindergartenName" class="form-control" id="kinder-name"/>
-            </div>
-        </div>
+                    <div class="col-12 col-md-4">
+                        <label asp-for="Nr" class="form-label"></label>
+                        <input asp-for="Nr" class="form-control" id="kinder-nr" />
+                    </div>
 
-        <div class="form-group row">
-            <label asp-for="TeacherName" class="col-sm-2 col-form-label"></label>
-            <div class="col-sm-10">
-                <input asp-for="TeacherName" class="form-control" id="kinder-teacher"/>
-            </div>
-        </div>
+                    <div class="col-12 col-md-8">
+                        <label asp-for="GroupName" class="form-label"></label>
+                        <input asp-for="GroupName" class="form-control" id="kinder-groupname" />
+                    </div>
 
-        <div class="form-group row">
-            <label asp-for="Files" class="col-sm-2 col-form-label"></label>
-            <div class="col-sm-5">
-                <div class="custom-file">
-                    <input asp-for="Files" multiple type="file" class="form-control" id="kinder-files"/>
-                </div>
-            </div>
-        </div>
+                    <div class="col-12 col-md-4">
+                        <label asp-for="ChildrenCount" class="form-label"></label>
+                        <input asp-for="ChildrenCount" class="form-control" id="kinder-childcount" />
+                        <span asp-validation-for="ChildrenCount" class="text-danger small"></span>
+                    </div>
 
-        <button type="submit" class="btn btn-success" id="kinder-submit">
-            @(Model.Id.HasValue ? "Update" : "Create")
-        </button>
-        <a asp-action="Index" asp-controller="Kindergarten" class="btn btn-secondary" id="kinder-back">Back</a>
-    </form>
+                    <div class="col-12 col-md-8">
+                        <label asp-for="KindergartenName" class="form-label"></label>
+                        <input asp-for="KindergartenName" class="form-control" id="kinder-name" />
+                    </div>
 
-    @if (Model.Id.HasValue && Model.Images != null && Model.Images.Any())
-    {
-        <hr />
-        <div class="row mt-3">
-            @foreach (var image in Model.Images)
-            {
-                <div class="col-md-4 mb-4 text-center">
-                    <img src="@image.Image" alt="@image.ImageTitle" class="img-thumbnail" />
+                    <div class="col-12 col-md-8">
+                        <label asp-for="TeacherName" class="form-label"></label>
+                        <input asp-for="TeacherName" class="form-control" id="kinder-teacher" />
+                    </div>
 
-                    <div class="small mt-1">@image.ImageTitle</div>
+                    <div class="col-12 col-md-8">
+                        <label asp-for="Files" class="form-label"></label>
+                        <input asp-for="Files" multiple type="file" class="form-control" id="kinder-files" />
+                        <div class="form-text">You can upload multiple images.</div>
+                    </div>
 
-                    <form asp-action="RemoveImage"
-                          asp-controller="Kindergarten"
-                          asp-route-imageId="@image.ImageId"
-                          asp-route-kindergartenId="@Model.Id"
-                          method="post"
-                          class="mt-2">
-                        @Html.AntiForgeryToken()
-                        <button type="submit" class="btn btn-sm btn-outline-danger"
-                                onclick="return confirm('Delete this image?');">
-                            Delete image
+                    <div class="col-12 d-flex gap-2">
+                        <button type="submit" class="btn btn-success" id="kinder-submit">
+                            @(isEdit ? "Update" : "Create")
                         </button>
-                    </form>
-                </div>
-            }
+                        <a asp-action="Index" asp-controller="Kindergarten" class="btn btn-outline-secondary" id="kinder-back">
+                            Back
+                        </a>
+                    </div>
+                </form>
+            </div>
         </div>
-    }
-    else
-    {
-        <p>No images available.</p>
-    }
+
+        @if (isEdit && Model.Images != null && Model.Images.Any())
+        {
+            <hr class="my-4" />
+
+            <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2">
+                <div class="fw-semibold">Images</div>
+                <div class="small text-muted">Click delete to remove an image.</div>
+            </div>
+
+            <div class="row g-3 image-grid">
+                @foreach (var image in Model.Images)
+                {
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="thumb">
+                            <img src="@image.Image" alt="@image.ImageTitle" />
+                            <div class="caption d-flex align-items-center justify-content-between gap-2">
+                                <div class="small text-truncate" style="max-width: 70%;">@image.ImageTitle</div>
+
+                                <form asp-action="RemoveImage"
+                                      asp-controller="Kindergarten"
+                                      asp-route-imageId="@image.ImageId"
+                                      asp-route-kindergartenId="@Model.Id"
+                                      method="post"
+                                      class="m-0">
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" class="btn btn-sm btn-outline-danger"
+                                            onclick="return confirm('Delete this image?');">
+                                        Delete
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else if (isEdit)
+        {
+            <hr class="my-4" />
+            <div class="text-muted small">No images available.</div>
+        }
+    </div>
 </div>
