@@ -7,6 +7,11 @@ using ShopTARge24.Core.Dto.Serviceinterface;
 using ShopTARge24.Core.ServiceInterface;
 using ShopTARge24.Data;
 using ShopTARge24.Hubs;
+using System.Net;
+using Microsoft.AspNetCore.Authentication.Google;
+
+
+
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -51,6 +56,13 @@ builder.Services.ConfigureApplicationCookie(options =>
 });
 
 builder.Services.AddSignalR();
+
+builder.Services.AddAuthentication()
+    .AddGoogle(options =>
+    {
+        options.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+        options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+    });
 
 var app = builder.Build();
 

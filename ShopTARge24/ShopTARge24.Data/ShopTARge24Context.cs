@@ -1,13 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
-using System.IO;
 using ShopTARge24.Core.Domain;
-
 
 namespace ShopTARge24.Data
 {
-    public class ShopTARge24Context : DbContext
+    public class ShopTARge24Context : IdentityDbContext<ApplicationUser>
     {
         public ShopTARge24Context(DbContextOptions<ShopTARge24Context> options)
             : base(options) { }
@@ -16,6 +15,11 @@ namespace ShopTARge24.Data
         public DbSet<FileToApi> FileToApis { get; set; }
         public DbSet<Kindergarten> Kindergarten { get; set; }
         public DbSet<RealEstate> RealEstates { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+        }
     }
 
     public class ShopTARge24ContextFactory : IDesignTimeDbContextFactory<ShopTARge24Context>

@@ -7,6 +7,7 @@ using ShopTARge24.Core.ServiceInterface;
 using ShopTARge24.Models;
 using ShopTARge24.Models.Accounts;
 using System.Diagnostics;
+using System.Net;
 using System.Security.Claims;
 
 namespace ShopTARge24.Controllers
@@ -56,8 +57,13 @@ namespace ShopTARge24.Controllers
                 if (result.Succeeded)
                 {
                     var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    var encodedToken = WebUtility.UrlEncode(token);
 
-                    var confirmationLink = Url.Action("ConfirmEmail", "Accounts", new { userId = user.Id, token = token }, Request.Scheme);
+                    var confirmationLink = Url.Action(
+                        "ConfirmEmail",
+                        "Accounts",
+                        new { userId = user.Id, token = encodedToken },
+                        Request.Scheme);
 
                     EmailTokenDto newsignup = new();
                     newsignup.Token = token;
@@ -110,7 +116,9 @@ namespace ShopTARge24.Controllers
                 ViewBag.ErrorMessage = $"The user with id of {userId} is not valid";
                 return View("NotFound");
             }
-            var result = await _userManager.ConfirmEmailAsync(user, token);
+            var decodedToken = WebUtility.UrlDecode(token);
+            var result = await _userManager.ConfirmEmailAsync(user, decodedToken);
+
             List<string> errordatas =
                         [
                         "Area", "Accounts",
@@ -248,7 +256,14 @@ namespace ShopTARge24.Controllers
                 if (user != null && await _userManager.IsEmailConfirmedAsync(user))
                 {
                     var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-                    var passwordResetLink = Url.Action("ResetPassword", "Accounts", new { email = model.Email, token = token }, Request.Scheme);
+                    var encodedToken = WebUtility.UrlEncode(token);
+
+                    var passwordResetLink = Url.Action(
+                        "ResetPassword",
+                        "Accounts",
+                        new { email = model.Email, token = encodedToken },
+                        Request.Scheme);
+
 
                     var emailDto = new EmailDto
                     {
@@ -271,13 +286,21 @@ namespace ShopTARge24.Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult ResetPassword(string email, string token)
         {
-            if (token == null || email == null)
+            if (string.IsNullOrWhiteSpace(token) || string.IsNullOrWhiteSpace(email))
             {
                 ModelState.AddModelError("", "Invalid password reset token");
+                return View(new ResetPasswordViewModel());
             }
 
-            return View();
+            var vm = new ResetPasswordViewModel
+            {
+                Email = email,
+                Token = token // see on URL-encoded token
+            };
+
+            return View(vm);
         }
+
 
         [HttpPost]
         [AllowAnonymous]
@@ -289,7 +312,9 @@ namespace ShopTARge24.Controllers
 
                 if (user != null)
                 {
-                    var result = await _userManager.ResetPasswordAsync(user, model.Token, model.Password);
+                    var decodedToken = WebUtility.UrlDecode(model.Token);
+                    var result = await _userManager.ResetPasswordAsync(user, decodedToken, model.Password);
+
                     if (result.Succeeded)
                     {
                         if (await _userManager.IsLockedOutAsync(user))
